@@ -2,8 +2,8 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 from methods import Token, Restricted
-import hashlib, base64
 import mysql.connector
+import hashlib, base64
 
 Conection_db = mysql.connector.connect( host='localhost', user= 'secret', passwd='noPow3r', port=8000, db='bootcamp_tht' )
 cur = Conection_db.cursor()
@@ -33,10 +33,8 @@ def url_login():
     username = request.form['username']
     password = request.form['password']
     salt = request.form['salt']
-    saltpass = username+password+salt
     
     res = {
-        hashlib.sha256(saltpass.encode()).hexdigest()
         "data": login.generate_token(salt, username, password)
     }
     return jsonify(res)
@@ -46,6 +44,7 @@ def url_login():
 @app.route("/protected")
 def url_protected():
     auth_token = request.headers.get('Authorization')
+    auth_token["Authorization"] = "Bearer {my2w7wjd7yXF64FIADfJxNs1oupTGAuW}"
     res = {
         "data": protected.access_data(auth_token)
     }
