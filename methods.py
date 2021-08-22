@@ -2,7 +2,7 @@
 class Token:
 
     def generate_token(self, username, password):
-        saltpass = username + password + salt
+        saltpass = username + password + self
         return hashlib.sha256(saltpass.encode()).hexdigest()
 
 
