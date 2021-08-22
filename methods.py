@@ -2,7 +2,8 @@
 class Token:
 
     def generate_token(self, username, password):
-        return 'test'
+        saltpass = username + password + salt
+        return hashlib.sha256(saltpass.encode()).hexdigest()
 
 
 class Restricted:
